@@ -18,8 +18,8 @@
       "phpunit/phpunit": "6.*"
     },
     "autoload": {
-        "psr-0": {
-            "Gloudemans\\Shoppingcart": "src/"
+        "psr-4": {
+            "Gloudemans\\Shoppingcart\\": "src/"
         }
     }
 }
