@@ -13,10 +13,10 @@ class ShoppingcartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['cart'] = $this->app->share(function ($app) {
-            $session = $app['session'];
-            $events = $app['events'];
-            return new Cart($session, $events);
+        $this->app->singleton(Cart::class, function () {
+            return new Cart($this->app->session, $this->app->events);
         });
+
+        $this->app->alias(Cart::class, 'cart');
     }
 }
