@@ -1,5 +1,5 @@
 {
-    "name": "gloudemans/shoppingcart",
+    "name": "falcon/laravel-shopping-cart",
     "description": "Laravel 4 Shoppingcart",
     "keywords": ["laravel", "shoppingcart"],
     "license": "MIT",
