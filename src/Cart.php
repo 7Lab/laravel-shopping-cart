@@ -102,7 +102,7 @@ class Cart
             // recursively call the add function
             if ($this->is_multi($id)) {
                 // Fire the cart.batch event
-                $this->event->fire('cart.batch', $id);
+                $this->event->dispatch('cart.batch', $id);
 
                 foreach ($id as $item) {
                     $options = array_get($item, 'options', []);
@@ -110,7 +110,7 @@ class Cart
                 }
 
                 // Fire the cart.batched event
-                $this->event->fire('cart.batched', $id);
+                $this->event->dispatch('cart.batched', $id);
 
                 return;
             }
@@ -118,23 +118,23 @@ class Cart
             $options = array_get($id, 'options', []);
 
             // Fire the cart.add event
-            $this->event->fire('cart.add', array_merge($id, ['options' => $options]));
+            $this->event->dispatch('cart.add', array_merge($id, ['options' => $options]));
 
             $result = $this->addRow($id['id'], $id['name'], $id['qty'], $id['price'], $options);
 
             // Fire the cart.added event
-            $this->event->fire('cart.added', array_merge($id, ['options' => $options]));
+            $this->event->dispatch('cart.added', array_merge($id, ['options' => $options]));
 
             return $result;
         }
 
         // Fire the cart.add event
-        $this->event->fire('cart.add', compact('id', 'name', 'qty', 'price', 'options'));
+        $this->event->dispatch('cart.add', compact('id', 'name', 'qty', 'price', 'options'));
 
         $result = $this->addRow($id, $name, $qty, $price, $options);
 
         // Fire the cart.added event
-        $this->event->fire('cart.added', compact('id', 'name', 'qty', 'price', 'options'));
+        $this->event->dispatch('cart.added', compact('id', 'name', 'qty', 'price', 'options'));
 
         return $result;
     }
@@ -153,23 +153,23 @@ class Cart
 
         if (is_array($attribute)) {
             // Fire the cart.update event
-            $this->event->fire('cart.update', $rowId);
+            $this->event->dispatch('cart.update', $rowId);
 
             $result = $this->updateAttribute($rowId, $attribute);
 
             // Fire the cart.updated event
-            $this->event->fire('cart.updated', $rowId);
+            $this->event->dispatch('cart.updated', $rowId);
 
             return $result;
         }
 
         // Fire the cart.update event
-        $this->event->fire('cart.update', $rowId);
+        $this->event->dispatch('cart.update', $rowId);
 
         $result = $this->updateQty($rowId, $attribute);
 
         // Fire the cart.updated event
-        $this->event->fire('cart.updated', $rowId);
+        $this->event->dispatch('cart.updated', $rowId);
 
         return $result;
     }
@@ -188,12 +188,12 @@ class Cart
         $cart = $this->getContent();
 
         // Fire the cart.remove event
-        $this->event->fire('cart.remove', $rowId);
+        $this->event->dispatch('cart.remove', $rowId);
 
         $cart->forget($rowId);
 
         // Fire the cart.removed event
-        $this->event->fire('cart.removed', $rowId);
+        $this->event->dispatch('cart.removed', $rowId);
 
         return $this->updateCart($cart);
     }
@@ -228,12 +228,12 @@ class Cart
     public function destroy()
     {
         // Fire the cart.destroy event
-        $this->event->fire('cart.destroy');
+        $this->event->dispatch('cart.destroy');
 
         $result = $this->updateCart(null);
 
         // Fire the cart.destroyed event
-        $this->event->fire('cart.destroyed');
+        $this->event->dispatch('cart.destroyed');
 
         return $result;
     }
