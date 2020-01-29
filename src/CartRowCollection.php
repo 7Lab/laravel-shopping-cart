@@ -25,7 +25,7 @@ class CartRowCollection extends Collection
      * @param string $associatedModel
      * @param string $associatedModelNamespace
      */
-    public function __construct($items, $associatedModel, $associatedModelNamespace)
+    public function __construct($items, $associatedModel = null, $associatedModelNamespace = null)
     {
         parent::__construct($items);
 
