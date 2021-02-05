@@ -1,6 +1,7 @@
 <?php
 
 namespace Gloudemans\Shoppingcart;
+use Illuminate\Support\Arr;
 
 use Illuminate\Contracts\Events\Dispatcher;
 
@@ -105,7 +106,7 @@ class Cart
                 $this->event->dispatch('cart.batch', $id);
 
                 foreach ($id as $item) {
-                    $options = array_get($item, 'options', []);
+                    $options = Arr::get($item, 'options', []);
                     $this->addRow($item['id'], $item['name'], $item['qty'], $item['price'], $options);
                 }
 
@@ -115,7 +116,7 @@ class Cart
                 return;
             }
 
-            $options = array_get($id, 'options', []);
+            $options = Arr::get($id, 'options', []);
 
             // Fire the cart.add event
             $this->event->dispatch('cart.add', array_merge($id, ['options' => $options]));
